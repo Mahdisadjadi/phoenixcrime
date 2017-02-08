@@ -17,3 +17,9 @@ The repository is in initial stage. It will contain"
 * Create a python pipeline to reproduce new results using update data
 * Clean map notebook, showing color zip codes based on the number of crimes
 * Create a website which including data visualization using D3
+
+## Pictures
+### Heatmap
+![Crime heatmap](heatmap.png)
+### D3 visualization
+![D3](d3.png)

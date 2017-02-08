@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <meta charset="utf-8">
 <style>
@@ -9,6 +10,8 @@ body{
   top:10%;
   background-color: white;
   font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
 }
 
 h1 {
@@ -19,20 +22,30 @@ h4 {
     text-align: center;
 }
 
+#header{
+  margin: 40px auto;
+}
+
 #container{
   background: #a1d99b;
   height: 500;
   margin: 5% 14% 5% 14%;
+  border-radius:8px;
+  border: 1px solid black;
 }
 
 #chart {
   background-color:  #e5f5e0;
-  width: 500;
+  width: 400;
   height: 300;
-  margin: 2% 10% 4% 10%;
+  margin: 4% 10% 4% 10%;
   display:block;
   border-radius:8px;
   color:black;
+  border: 0.1px solid black;
+}
+
+#share{
 }
 
 .bar {
@@ -89,16 +102,32 @@ h4 {
 
 </style>
 <body>
-<H1>Weekly trends of crimes in Phoenix, AZ</H1>
-<h4>Updated on: 6 Feb 2017</h4>
+  <i class="fa fa-camera-retro"></i>
 
+<div id='header'>
+  <H1>Weekly trends of crimes in Phoenix, AZ</H1>
+  <h4>Updated on: 6 Feb 2017</h4>
+</div>
 <div id="container" align="center">
   <div>
-      <select onchange="loadData()" id="select_crime">
-      </select>
+      <select onchange="loadData()" id="select_crime"></select>
       <input type=checkbox>Sort</input>
   </div>
   <div id='chart'></div>
+  <div id = 'share'>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://mahdisadjadi.com/phoenixcrime/" target="_blank">
+      <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+    </a>
+    <a href="https://twitter.com/share?url=http://mahdisadjadi.com/phoenixcrime/&text=Weekly%20Crime%20Trend%20in%20Phoenix&hashtags=phoenix,crime,datascience,dataanalysis,d3" target="_blank">
+    <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+  </div>
+</div>
+
+<div>
+  <a href="https://github.com/Mahdisadjadi/phoenixcrime">Github Repo</a> /
+  <a href="https://github.com/Mahdisadjadi/phoenixcrime/blob/master/LICENSE" target="_blank">MIT License</a> /
+  <a href="http://mahdisadjadi.com" target="_blank">Mahdi Sadjadi</a> /
+  2017.
 </div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>

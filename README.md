@@ -3,7 +3,8 @@
 This repository contains information about crimes happened in Phoenix, AZ.
 
 *Note*:
-The dataset is downloaded on 6 Feb 2017.
+The dataset is downloaded on 6 Feb 2017. A simple visualization of weekly trend is
+available [here](http://mahdisadjadi.com/phoenixcrime/).
 
 ## What it'll be
 The repository is in initial stage. It will contain"

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  .bar {
+    fill: steelblue;
+  }
+
+  .bar:hover {
+    fill: brown;
+  }
+
+  .axis text {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+</style>
+<body>
+<H1>Weekly trends of crimes in Phoenix, AZ</H1>
+<h4>Updated on: 10 Feb 2017</h4>
+<select onchange="loadData()" id="select_crime">
+</select>
+
+<input type=checkbox>Sort</input>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script>
+
+/*
+Almost an exact replica of:
+http://www.alexrothenberg.com/2014/01/06/learning-d3-by-building-a-chart.js.html
+*/
+
+// add all types of crime to select menu
+crimeNames = ['ARSON','ASSAULT','BURGLARY','DRUG_OFFENSE',
+'LARCENY_THEFT','MURDER','RAPE','ROBBERY','VEHICLE_THEFT'];
+var list = document.getElementById("select_crime");
+   for(var i in crimeNames) {
+     name = crimeNames[i];
+     //name = crimeNames[i].toLowerCase();
+     //name = name[0].toUpperCase() + name.slice(1);
+     list.add(new Option(name));
+   };
+
+var tip = d3.tip()
+ .attr('class', 'd3-tip')
+ .offset([-10, 0])
+ .html(function(d) {
+   return "Count:<span style='color:red'>"+d.count+"</span>";
+ });
+
+var svg = d3.select('body').append('svg')
+            .attr('height', '200')
+            .attr('width', '500');
+var g = svg.append('g')
+  .attr("transform", "translate(40, 20)");
+
+svg.call(tip);
+
+g.append('g')
+   .attr('class', 'x axis')
+   .attr('transform', 'translate(0, 150)');
+g.append('g')
+   .attr('class', 'y axis');
+
+var parseRow = function(row) {
+  return {
+    weekday: row.weekday,
+    count: parseInt(row.count)
+  }
+};
+
+var dayIndex = function(dayName) {
+  var days = {
+    Monday:1, Tuesday:2, Wednesday:3,
+    Thursday:4, Friday:5, Saturday:6,
+    Sunday:7};
+  return days[dayName];
+};
+
+var loadData = function() {
+var crime_type = document.getElementById('select_crime').selectedOptions[0].text;
+var dataFile = 'crime_weekly/' + crime_type + '.csv';
+console.log(dataFile)
+d3.csv(dataFile, parseRow, function(data) {
+  var days = data.map(function(d) { return d.weekday })
+  var x = d3.scale.ordinal()
+          .rangeRoundBands([0, 400], .1)
+          .domain(days);
+
+  var counts = data.map(function(d) { return d.count });
+  var y = d3.scale.linear()
+          .range([150, 0])
+          .domain([0, d3.max(counts)]);
+
+  var rect = g.selectAll('.bar').data(data);
+  rect.enter().append('rect');
+  rect.exit().remove();
+  rect.attr('class', 'bar')
+      .attr('width', x.rangeBand())
+      .attr('height', function(d) { return 150 - y(d.count)})
+      .attr('x', function(d) { return x(d.weekday) })
+      .attr('y', function(d) { return y(d.count) })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+      /*.on("mouseover", function(d) {
+        d3.select(this).attr("r", 10).style("fill", "red");
+      })
+      .on("mouseout", function(d) {
+        d3.select(this).attr("r", 10).style("fill", "steelblue");
+      });*/
+
+  var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient('bottom');
+
+  var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient('left')
+                .tickFormat(d3.format('.0'));
+
+  d3.select('.x.axis').call(xAxis);
+  d3.select('.y.axis').call(yAxis);
+
+  d3.select('input').on('change', function() {
+    var sortByCount = function(a, b) { return b.count - a.count; };
+    var sortByDay = function(a, b) { return d3.ascending(dayIndex(a.weekday), dayIndex(b.weekday)); };
+    var sortedDays = data.sort(this.checked ? sortByCount : sortByDay)
+                       .map(function(d) { return d.weekday; })
+    x.domain(sortedDays)
+
+    var transition = svg.transition().duration(750);
+    var delay = function(d, i) { return i * 50; };
+
+    transition.selectAll(".bar")
+        .delay(delay)
+        .attr("x", function(d) { return x(d.weekday); });
+
+    transition.select(".x.axis")
+        .call(xAxis)
+      .selectAll("g")
+        .delay(delay);
+  })
+})
+}
+
+loadData()
+</script>
+</body>

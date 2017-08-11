@@ -112,7 +112,7 @@ h4 {
 <body>
 <div id='header'>
   <H1>Weekly trends of crimes in Phoenix, AZ</H1>
-  <h4>Updated on: 6 Feb 2017</h4>
+  <h4>Updated on: 11 Aug 2017</h4>
   <p align="justify">
     The City of Phoenix has collected and published its crime dataset
     since Novermber 2015 (<a href="https://www.phoenix.gov/opendata"
@@ -132,7 +132,7 @@ h4 {
     SHARE: <a href="https://www.facebook.com/sharer/sharer.php?u=http://mahdisadjadi.com/phoenixcrime/" target="_blank">
       <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
     </a>
-    <a href="https://twitter.com/share?url=http://mahdisadjadi.com/phoenixcrime/&text=Weekly%20Crime%20Trend%20in%20Phoenix&hashtags=phoenix,crime,datascience,dataanalysis,d3" target="_blank">
+    <a href="https://twitter.com/share?url=http://mahdisadjadi.com/phoenixcrime/&text=Weekly%20Crime%20Trend%20in%20Phoenix&hashtags=phoenix,arizona,crime,datascience,dataanalysis,d3" target="_blank">
     <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a> /
     <a href="https://github.com/Mahdisadjadi/phoenixcrime">Github Repo</a> /
     <a href="https://github.com/Mahdisadjadi/phoenixcrime/blob/master/LICENSE" target="_blank">MIT License</a> /
@@ -214,7 +214,7 @@ var crime_type = document.getElementById('select_crime').selectedOptions[0].text
 var dataFile = 'crime_weekly/' + crime_type + '.csv';
 console.log(dataFile)
 d3.csv(dataFile, parseRow, function(data) {
-  var days = data.map(function(d) { return d.weekday })
+  var days = data.map(function(d) { return d.weekday });
   var x = d3.scale.ordinal()
           .rangeRoundBands([0, 400], .1)
           .domain(days);

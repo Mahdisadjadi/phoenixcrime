@@ -1,8 +1,8 @@
-,count
-"('Monday',)",
-"('Tuesday',)",
-"('Wednesday',)",
-"('Thursday',)",
-"('Friday',)",
-"('Saturday',)",
-"('Sunday',)",
+weekday,count
+Friday,1465
+Monday,1407
+Saturday,1660
+Sunday,1614
+Thursday,1366
+Tuesday,1401
+Wednesday,1370

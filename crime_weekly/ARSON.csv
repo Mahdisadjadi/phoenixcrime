@@ -1,8 +1,8 @@
-,count
-"('Monday',)",
-"('Tuesday',)",
-"('Wednesday',)",
-"('Thursday',)",
-"('Friday',)",
-"('Saturday',)",
-"('Sunday',)",
+weekday,count
+Friday,106
+Monday,109
+Saturday,128
+Sunday,106
+Thursday,104
+Tuesday,101
+Wednesday,92

@@ -1,8 +1,8 @@
-weekday,count
-Monday,1771
-Tuesday,1748
-Wednesday,1735
-Thursday,1681
-Friday,1833
-Saturday,1768
-Sunday,1755
+,count
+"('Monday',)",
+"('Tuesday',)",
+"('Wednesday',)",
+"('Thursday',)",
+"('Friday',)",
+"('Saturday',)",
+"('Sunday',)",
